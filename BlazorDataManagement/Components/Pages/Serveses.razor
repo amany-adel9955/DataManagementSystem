@@ -1,0 +1,40 @@
+﻿@page "/servers"
+
+
+<h3>Servers</h3>
+<br />
+
+<div class="container-fluid text-center">
+	<div class="row w-50">
+		@foreach (var city in cities)
+		{
+			<div class="card">
+				<div class="card-body">
+				<img src="@($"/Images/{city}.png")" class="card-img-top" alt="...">
+				
+					<div class="col">
+						<button type="button" class="btn btn-dark">@city</button>
+					</div>
+				</div>
+			</div>
+			
+		}
+	</div>
+</div>
+
+<br />
+<ul>
+	@foreach(var server in servers)
+	{
+		<li>@server.Name is in @server.City 
+
+			<span style="color:@((server.IsOnline ? "green" : "red"))">@(server.IsOnline ? "Online" : "Offline")</span>
+			&nbsp;
+			<a href="/servers/edit" class="btn btn-link">Edit</a>
+		</li>
+	}
+</ul>
+@code {
+	private List<Server> servers = ServerRepo.GetServerByCity("c1");
+	private List<string> cities = CitiesRepo.GetAllCities();
+}
